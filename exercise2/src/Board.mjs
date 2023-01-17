@@ -45,4 +45,8 @@ export class Board {
   tick() {
     this.block.y++;
   }
+
+  hasFalling() {
+    return true;
+  }
 }
