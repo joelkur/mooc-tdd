@@ -10,4 +10,7 @@ export class Board {
   toString() {
     return "...\n...\n...\n";
   }
+
+  /** @param {Block} block */
+  drop(block) {}
 }
