@@ -1,7 +1,7 @@
 export class Board {
   width;
   height;
-  block;
+  fallingBlock;
 
   constructor(width, height) {
     this.width = width;
@@ -14,8 +14,8 @@ export class Board {
       if (this._shouldRenderNewline(i)) result += "\n";
       const [row, col] = this._getCoords(i);
 
-      if (this.block && this.block.x === col && this.block.y === row) {
-        result += this.block.color;
+      if (this.fallingBlock && this.fallingBlock.x === col && this.fallingBlock.y === row) {
+        result += this.fallingBlock.color;
         continue;
       }
 
@@ -36,17 +36,22 @@ export class Board {
 
   /** @param {Block} block */
   drop(block) {
-    if (this.block) throw new Error("already falling");
+    if (this.fallingBlock) throw new Error("already falling");
 
-    this.block = block;
-    this.block.x = Math.floor(this.width / 2);
+    this.fallingBlock = block;
+    this.fallingBlock.x = Math.floor(this.width / 2);
   }
 
   tick() {
-    this.block.y++;
+    if (this.fallingBlock.y === this.height - 1) {
+      this.fallingBlock = null;
+      return;
+    }
+
+    this.fallingBlock.y++;
   }
 
   hasFalling() {
-    return true;
+    return !!this.fallingBlock;
   }
 }
