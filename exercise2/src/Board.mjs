@@ -51,6 +51,7 @@ export class Board {
     if (this.fallingBlock) throw new Error("already falling");
 
     this.fallingBlock = block;
+    // center block
     this.fallingBlock.x = Math.floor(this.width / 2);
   }
 
