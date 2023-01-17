@@ -12,8 +12,14 @@ export class Board {
     let result = "";
     for (let i = 0; i < this.height * this.width; i++) {
       if (this._shouldRenderNewline(i)) result += "\n";
-      if (this.block && i === 1) result += "X";
-      else result += ".";
+      const [row, col] = this._getCoords(i);
+
+      if (this.block && this.block.x === col && this.block.y === row) {
+        result += this.block.color;
+        continue;
+      }
+
+      result += ".";
     };
     return result + "\n";
   }
@@ -21,9 +27,17 @@ export class Board {
   _shouldRenderNewline(iterator) {
     return iterator > 0 && iterator % this.width === 0;
   }
+
+  _getCoords(iterator) {
+    const row = Math.floor(iterator / this.width);
+    const col = iterator % this.width;
+    return [row, col];
+  }
+
   /** @param {Block} block */
   drop(block) {
     this.block = block;
+    this.block.x = Math.floor(this.width / 2);
   }
 
   tick() {}
