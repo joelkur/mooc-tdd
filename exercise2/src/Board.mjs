@@ -55,19 +55,20 @@ export class Board {
   }
 
   tick() {
-    if (this.fallingBlock.y === this.height - 1) {
+    if (
+      this._blockInCoord(this.fallingBlock.y + 1, this.fallingBlock.x) ||
+      this._hitsGround()
+    ) {
       this.blocksOnGround.push(this.fallingBlock);
       this.fallingBlock = null;
       return;
     }
 
-    if (this._blockInCoord(this.fallingBlock.y + 1, this.fallingBlock.x)) {
-      this.blocksOnGround.push(this.fallingBlock);
-      this.fallingBlock = null;
-      return; 
-    }
-
     this.fallingBlock.y++;
+  }
+
+  _hitsGround() {
+    return this.fallingBlock.y === this.height - 1;
   }
 
   hasFalling() {
