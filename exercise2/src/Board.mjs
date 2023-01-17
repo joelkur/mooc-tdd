@@ -1,16 +1,18 @@
 export class Board {
   width;
   height;
+  blocksOnGround;
   fallingBlock;
 
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.blocksOnGround = [];
   }
 
   toString() {
     let result = "";
-    for (let i = 0; i < this.height * this.width; i++) {
+    mainLoop: for (let i = 0; i < this.height * this.width; i++) {
       if (this._shouldRenderNewline(i)) result += "\n";
       const [row, col] = this._getCoords(i);
 
@@ -19,11 +21,17 @@ export class Board {
         continue;
       }
 
+      for (const block of this.blocksOnGround) {
+        if (block.x === col && block.y === row) {
+          result += block.color;
+          continue mainLoop;
+        }
+      }
+
       result += ".";
     };
     return result + "\n";
   }
-
   _shouldRenderNewline(iterator) {
     return iterator > 0 && iterator % this.width === 0;
   }
@@ -44,6 +52,7 @@ export class Board {
 
   tick() {
     if (this.fallingBlock.y === this.height - 1) {
+      this.blocksOnGround.push(this.fallingBlock);
       this.fallingBlock = null;
       return;
     }
