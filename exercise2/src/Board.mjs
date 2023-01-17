@@ -40,5 +40,7 @@ export class Board {
     this.block.x = Math.floor(this.width / 2);
   }
 
-  tick() {}
+  tick() {
+    this.block.y++;
+  }
 }
