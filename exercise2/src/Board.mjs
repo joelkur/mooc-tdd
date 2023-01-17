@@ -12,26 +12,30 @@ export class Board {
 
   toString() {
     let result = "";
-    mainLoop: for (let i = 0; i < this.height * this.width; i++) {
+    for (let i = 0; i < this.height * this.width; i++) {
       if (this._shouldRenderNewline(i)) result += "\n";
       const [row, col] = this._getCoords(i);
 
-      if (this.fallingBlock && this.fallingBlock.x === col && this.fallingBlock.y === row) {
-        result += this.fallingBlock.color;
+      const block = this._blockInCoord(row, col);
+      if (block) {
+        result += block.color;
         continue;
-      }
-
-      for (const block of this.blocksOnGround) {
-        if (block.x === col && block.y === row) {
-          result += block.color;
-          continue mainLoop;
-        }
       }
 
       result += ".";
     };
     return result + "\n";
   }
+
+  _blockInCoord(row, col) {
+    const blocks = [...this.blocksOnGround, this.fallingBlock];
+    for (const block of blocks) {
+      if (block && block.x === col && block.y === row) {
+        return block;
+      }
+    }
+  }
+
   _shouldRenderNewline(iterator) {
     return iterator > 0 && iterator % this.width === 0;
   }
