@@ -61,6 +61,12 @@ export class Board {
       return;
     }
 
+    if (this._blockInCoord(this.fallingBlock.y + 1, this.fallingBlock.x)) {
+      this.blocksOnGround.push(this.fallingBlock);
+      this.fallingBlock = null;
+      return; 
+    }
+
     this.fallingBlock.y++;
   }
 
