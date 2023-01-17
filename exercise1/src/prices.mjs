@@ -76,6 +76,7 @@ function createApp(database) {
     return reduction;
   }
 
+  /** @param {Temporal.PlainDate} date */
   function isMonday(date) {
     return date.getDay() === 1;
   }
