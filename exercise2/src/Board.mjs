@@ -36,6 +36,8 @@ export class Board {
 
   /** @param {Block} block */
   drop(block) {
+    if (this.block) throw new Error("already falling");
+
     this.block = block;
     this.block.x = Math.floor(this.width / 2);
   }
