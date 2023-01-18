@@ -18,18 +18,10 @@ export class RotatingShape {
   }
 
   rotateRight() {
-    let newShape = "";
-    for (let i = 0; i < this.width; i++) {
-      newShape += this._columnToArray(i).reverse().join("") + "\n";
-    }
-    return newShape;
+    return this.shape.map((_, i) => this._columnToArray(i).reverse().join("")).join("\n") + "\n";
   }
 
   rotateLeft() {
-    let newShape = "";
-    for (let i = this.width - 1; i >= 0; i--) {
-      newShape += this._columnToArray(i).join("") + "\n";
-    }
-    return newShape;
+    return [...this.shape].reverse().map((_, i) => this._columnToArray(i).join("")).reverse().join("\n") + "\n";
   }
 }
