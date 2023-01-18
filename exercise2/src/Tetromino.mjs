@@ -81,14 +81,26 @@ export class Tetromino {
     return this._rotate(-1);
   }
 
+  _getNormalizedCoords(y, x) {
+    return [
+      y - this.y,
+      x - this.x,
+    ];
+  }
+
+  _isWithinBounds(y, x) {
+    const rows = this.prerendered[this.currentOrientation].shape;
+    const [ny, nx] = this._getNormalizedCoords(y, x);
+    if (ny < 0 || ny >= rows.length) return false;
+    if (!rows.length || nx < 0 || nx >= rows[0].length) return false;
+    return true;
+  }
+
   getCoord(y, x) {
     const rows = this.prerendered[this.currentOrientation].shape;
+    if (!this._isWithinBounds(y, x)) return;
 
-    const ny = y - this.y;
-    const nx = x - this.x;
-    if (ny < 0 || ny >= rows.length) return;
-    if (!rows.length || nx < 0 || nx >= rows[0].length) return;
-
+    const [ny, nx] = this._getNormalizedCoords(y, x);
     const row = rows[ny];
     if (!row) return;
     const c = row.charAt(nx);
