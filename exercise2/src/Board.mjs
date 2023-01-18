@@ -23,7 +23,7 @@ export class Board {
       }
 
       result += ".";
-    };
+    }
     return result + "\n";
   }
 

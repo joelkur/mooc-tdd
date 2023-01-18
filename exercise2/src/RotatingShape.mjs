@@ -1,7 +1,7 @@
 export class RotatingShape {
   /** @param {string} shape */
   constructor(shape) {
-    this.shape = shape.split("\n").map(row => row.trim());
+    this.shape = shape.split("\n").map((row) => row.trim());
   }
 
   get width() {
@@ -14,14 +14,24 @@ export class RotatingShape {
 
   /** @param {number} index */
   _columnToArray(index) {
-    return this.shape.map(row => row.charAt(index));
+    return this.shape.map((row) => row.charAt(index));
   }
 
   rotateRight() {
-    return this.shape.map((_, i) => this._columnToArray(i).reverse().join("")).join("\n") + "\n";
+    return (
+      this.shape
+        .map((_, i) => this._columnToArray(i).reverse().join(""))
+        .join("\n") + "\n"
+    );
   }
 
   rotateLeft() {
-    return [...this.shape].reverse().map((_, i) => this._columnToArray(i).join("")).reverse().join("\n") + "\n";
+    return (
+      [...this.shape]
+        .reverse()
+        .map((_, i) => this._columnToArray(i).join(""))
+        .reverse()
+        .join("\n") + "\n"
+    );
   }
 }
