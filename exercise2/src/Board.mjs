@@ -1,13 +1,13 @@
 export class Board {
   width;
   height;
-  blocksOnGround;
-  fallingBlock;
+  shapesOnGround;
+  fallingShape;
 
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.blocksOnGround = [];
+    this.shapesOnGround = [];
   }
 
   toString() {
@@ -30,7 +30,7 @@ export class Board {
   _blockInCoord(
     row,
     col,
-    blocksToCheck = [...this.blocksOnGround, this.fallingBlock]
+    blocksToCheck = [...this.shapesOnGround, this.fallingShape]
   ) {
     const blocks = blocksToCheck;
     for (const block of blocks) {
@@ -56,41 +56,41 @@ export class Board {
 
   /** @param {Block} block */
   drop(block) {
-    if (this.fallingBlock) throw new Error("already falling");
+    if (this.fallingShape) throw new Error("already falling");
 
-    this.fallingBlock = block;
+    this.fallingShape = block;
     // center block
-    this.fallingBlock.x = Math.floor(this.width / 2);
-    if (this.fallingBlock.width) {
-      this.fallingBlock.x -= Math.ceil(this.fallingBlock.width / 2);
+    this.fallingShape.x = Math.floor(this.width / 2);
+    if (this.fallingShape.width) {
+      this.fallingShape.x -= Math.ceil(this.fallingShape.width / 2);
     }
   }
 
   tick() {
-    if (!this.fallingBlock) return;
+    if (!this.fallingShape) return;
     if (
       this._blockInCoord(
-        this.fallingBlock.y + 1,
-        this.fallingBlock.x,
-        this.blocksOnGround
+        this.fallingShape.y + 1,
+        this.fallingShape.x,
+        this.shapesOnGround
       ) ||
       this._hitsGround()
     ) {
-      this.blocksOnGround.push(this.fallingBlock);
-      this.fallingBlock = null;
+      this.shapesOnGround.push(this.fallingShape);
+      this.fallingShape = null;
       return;
     }
 
-    this.fallingBlock.y++;
+    this.fallingShape.y++;
   }
 
   _hitsGround() {
-    let y = this.fallingBlock.y;
-    if (this.fallingBlock.height) y += this.fallingBlock.height;
+    let y = this.fallingShape.y;
+    if (this.fallingShape.height) y += this.fallingShape.height;
     return y === this.height - 1;
   }
 
   hasFalling() {
-    return !!this.fallingBlock;
+    return !!this.fallingShape;
   }
 }
