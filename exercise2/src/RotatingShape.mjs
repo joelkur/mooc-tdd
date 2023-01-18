@@ -1,6 +1,14 @@
 export class RotatingShape {
+  /** @param {string} shape */
+  constructor(shape) {
+    this.shape = shape;
+  }
+
   toString() {
-    return "ABC\nDEF\nGHI\n";
+    return this.shape
+      .split("\n")
+      .map(row => row.trim())
+      .join("\n") + "\n";
   }
 
   rotateRight() {
