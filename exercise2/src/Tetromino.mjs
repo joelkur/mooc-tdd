@@ -8,4 +8,14 @@ export class Tetromino {
       ...`
     );
   }
+
+  static get I_SHAPE() {
+    return new RotatingShape(
+      `.....
+      .....
+      IIII.
+      .....
+      .....`
+    );
+  }
 }
