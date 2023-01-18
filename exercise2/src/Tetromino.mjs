@@ -99,7 +99,6 @@ export class Tetromino {
     const rows = [...this.prerendered[this.currentOrientation].shape];
     const isEmptyRow = () => !Array.from(rows[rows.length -1]).find(c => c !== '.');
     while (isEmptyRow()) {
-      console.log('clearing empty');
       rows.pop();
     }
     return rows.length - 1;
