@@ -49,9 +49,12 @@ export class Tetromino {
     return this.prerendered[this.currentOrientation].toString();
   }
 
-  rotateRight() {
-    let newOrientation = this.currentOrientation + 1;
-    if (newOrientation >= this.orientations) {
+  /** @param {number} modifier */
+  _rotate(modifier) {
+    let newOrientation = this.currentOrientation + modifier;
+    if (newOrientation < 0) {
+      newOrientation = this.orientations - 1;
+    } else if (newOrientation >= this.orientations) {
       newOrientation = 0;
     }
     return new Tetromino({
@@ -61,15 +64,11 @@ export class Tetromino {
     });
   }
 
+  rotateRight() {
+    return this._rotate(1);
+  }
+
   rotateLeft() {
-    let newOrientation = this.currentOrientation - 1;
-    if (newOrientation < 0) {
-      newOrientation = this.orientations - 1;
-    }
-    return new Tetromino({
-      prerendered: this.prerendered,
-      currentOrientation: newOrientation,
-      orientationsCount: this.orientations
-    });
+    return this._rotate(-1);
   }
 }
