@@ -94,4 +94,14 @@ export class Tetromino {
   get width() {
     return this.prerendered[this.currentOrientation].width;
   }
+
+  get height() {
+    const rows = [...this.prerendered[this.currentOrientation].shape];
+    const isEmptyRow = () => !Array.from(rows[rows.length -1]).find(c => c !== '.');
+    while (isEmptyRow()) {
+      console.log('clearing empty');
+      rows.pop();
+    }
+    return rows.length - 1;
+  }
 }
