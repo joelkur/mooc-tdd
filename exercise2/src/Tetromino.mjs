@@ -30,10 +30,15 @@ export class Tetromino {
     });
   }
 
+  x;
+  y;
+
   constructor({initialShape, prerendered = [], orientationsCount = 4, currentOrientation = 0}) {
     this.orientations = orientationsCount;
     this.prerendered = prerendered;
     this.currentOrientation = currentOrientation;
+    this.x = 0;
+    this.y = 0;
 
     if (!this.prerendered.length) {
       let tempShape = new RotatingShape(initialShape);
@@ -45,7 +50,6 @@ export class Tetromino {
   }
 
   toString() {
-    console.log(this.currentOrientation);
     return this.prerendered[this.currentOrientation].toString();
   }
 
@@ -70,5 +74,24 @@ export class Tetromino {
 
   rotateLeft() {
     return this._rotate(-1);
+  }
+
+  getCoord(y, x) {
+    const rows = this.prerendered[this.currentOrientation].shape;
+
+    const ny = y - this.y;
+    const nx = x - this.x;
+    if (ny < 0 || ny >= rows.length) return;
+    if (!rows.length || nx < 0 || nx >= rows[0].length) return;
+
+    const row = rows[ny];
+    if (!row) return;
+    const c = row.charAt(nx);
+    if (c === '.') return;
+    return c;
+  }
+
+  get width() {
+    return this.prerendered[this.currentOrientation].width;
   }
 }

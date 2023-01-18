@@ -18,7 +18,7 @@ export class Board {
 
       const block = this._blockInCoord(row, col);
       if (block) {
-        result += block.color;
+        result += block;
         continue;
       }
 
@@ -30,8 +30,12 @@ export class Board {
   _blockInCoord(row, col) {
     const blocks = [...this.blocksOnGround, this.fallingBlock];
     for (const block of blocks) {
+      if (!block) continue;
+      if (block.getCoord) {
+        return block.getCoord(row, col);
+      }
       if (block && block.x === col && block.y === row) {
-        return block;
+        return block.color;
       }
     }
   }
@@ -53,6 +57,9 @@ export class Board {
     this.fallingBlock = block;
     // center block
     this.fallingBlock.x = Math.floor(this.width / 2);
+    if (this.fallingBlock.width) {
+      this.fallingBlock.x -= Math.ceil(this.fallingBlock.width / 2);
+    }
   }
 
   tick() {
