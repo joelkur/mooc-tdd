@@ -1,26 +1,35 @@
 export class RotatingShape {
   /** @param {string} shape */
   constructor(shape) {
-    this.shape = shape.split("\n").map(row => row.trim()).join("\n") + "\n";
+    this.shape = shape.split("\n").map(row => row.trim());
+  }
+
+  get width() {
+    return this.shape[0].length;
   }
 
   toString() {
-    return this.shape;
+    return this.shape.join("\n") + "\n";
+  }
+
+  /** @param {number} index */
+  _columnToArray(index) {
+    return this.shape.map(row => row.charAt(index));
   }
 
   rotateRight() {
     let newShape = "";
-    newShape += this.shape.charAt(8) + this.shape.charAt(4) + this.shape.charAt(0) + "\n";
-    newShape += this.shape.charAt(9) + this.shape.charAt(5) + this.shape.charAt(1) + "\n";
-    newShape += this.shape.charAt(10) + this.shape.charAt(6) + this.shape.charAt(2) + "\n";
+    for (let i = 0; i < this.width; i++) {
+      newShape += this._columnToArray(i).reverse().join("") + "\n";
+    }
     return newShape;
   }
 
   rotateLeft() {
     let newShape = "";
-    newShape += this.shape.charAt(2) + this.shape.charAt(6) + this.shape.charAt(10) + "\n";
-    newShape += this.shape.charAt(1) + this.shape.charAt(5) + this.shape.charAt(9) + "\n";
-    newShape += this.shape.charAt(0) + this.shape.charAt(4) + this.shape.charAt(8) + "\n";
+    for (let i = this.width - 1; i >= 0; i--) {
+      newShape += this._columnToArray(i).join("") + "\n";
+    }
     return newShape;
   }
 }
