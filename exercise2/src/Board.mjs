@@ -1,3 +1,6 @@
+import { Block } from "./Block.mjs";
+import { Tetromino } from "./Tetromino.mjs";
+
 export class Board {
   width;
   height;
@@ -35,10 +38,10 @@ export class Board {
     const blocks = blocksToCheck;
     for (const block of blocks) {
       if (!block) continue;
-      if (block.getCoord) {
+      if (block instanceof Tetromino) {
         return block.getCoord(row, col);
       }
-      if (block && block.x === col && block.y === row) {
+      if (block instanceof Block && block.x === col && block.y === row) {
         return block.color;
       }
     }
@@ -54,7 +57,7 @@ export class Board {
     return [row, col];
   }
 
-  /** @param {Block} block */
+  /** @param { import("./Block.mjs").Block | import("./Tetromino.mjs").Tetromino } block*/
   drop(block) {
     if (this.fallingShape) throw new Error("already falling");
 
