@@ -9,7 +9,11 @@ export class RotatingShape {
   }
 
   toString() {
-    return this.shape.join("\n") + "\n";
+    return this._buildShapeString(this.shape);
+  }
+
+  _buildShapeString(shape) {
+    return shape.join("\n") + "\n";
   }
 
   /** @param {number} index */
@@ -18,20 +22,18 @@ export class RotatingShape {
   }
 
   rotateRight() {
-    return (
+    return this._buildShapeString(
       this.shape
         .map((_, i) => this._columnToArray(i).reverse().join(""))
-        .join("\n") + "\n"
     );
   }
 
   rotateLeft() {
-    return (
+    return this._buildShapeString(
       [...this.shape]
         .reverse()
         .map((_, i) => this._columnToArray(i).join(""))
         .reverse()
-        .join("\n") + "\n"
     );
   }
 }
