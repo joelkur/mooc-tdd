@@ -21,6 +21,15 @@ export class Tetromino {
     });
   }
 
+  static get O_SHAPE() {
+    return new Tetromino({
+      initialShape: `.OO
+      .OO
+      ...`, 
+      orientationsCount: 1,
+    });
+  }
+
   constructor({initialShape, prerendered = [], orientationsCount = 4, currentOrientation = 0}) {
     this.orientations = orientationsCount;
     this.prerendered = prerendered;
