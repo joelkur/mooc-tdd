@@ -6,4 +6,8 @@ export class RotatingShape {
   rotateRight() {
     return "GDA\nHEB\nIFC\n";
   }
+
+  rotateLeft() {
+    return "CFI\nBEH\nADG\n";
+  }
 }
