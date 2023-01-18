@@ -89,7 +89,7 @@ export class Tetromino {
   }
 
   _isWithinBounds(y, x) {
-    const rows = this.prerendered[this.currentOrientation].shape;
+    const rows = this.shape;
     const [ny, nx] = this._getNormalizedCoords(y, x);
     if (ny < 0 || ny >= rows.length) return false;
     if (!rows.length || nx < 0 || nx >= rows[0].length) return false;
@@ -97,7 +97,7 @@ export class Tetromino {
   }
 
   getCoord(y, x) {
-    const rows = this.prerendered[this.currentOrientation].shape;
+    const rows = this.shape;
     if (!this._isWithinBounds(y, x)) return;
 
     const [ny, nx] = this._getNormalizedCoords(y, x);
@@ -108,12 +108,16 @@ export class Tetromino {
     return c;
   }
 
+  get shape() {
+    return this.prerendered[this.currentOrientation].shape;
+  }
+
   get width() {
     return this.prerendered[this.currentOrientation].width;
   }
 
   get height() {
-    const rows = [...this.prerendered[this.currentOrientation].shape];
+    const rows = [...this.shape];
     const isEmptyRow = () =>
       !Array.from(rows[rows.length - 1]).find((c) => c !== ".");
     while (isEmptyRow()) {
