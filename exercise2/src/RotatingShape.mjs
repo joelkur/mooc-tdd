@@ -20,7 +20,8 @@ export class RotatingShape {
   rotateRight() {
     return new RotatingShape(
       this.shape
-        .map((_, i) => this._columnToArray(i).reverse().join("")).join("\n")
+        .map((_, i) => this._columnToArray(i).reverse().join(""))
+        .join("\n")
     );
   }
 
@@ -29,7 +30,8 @@ export class RotatingShape {
       [...this.shape]
         .reverse()
         .map((_, i) => this._columnToArray(i).join(""))
-        .reverse().join("\n")
+        .reverse()
+        .join("\n")
     );
   }
 }

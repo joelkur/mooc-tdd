@@ -1,4 +1,4 @@
-import { RotatingShape } from './RotatingShape.mjs';
+import { RotatingShape } from "./RotatingShape.mjs";
 
 export class Tetromino {
   static get T_SHAPE() {
@@ -25,7 +25,7 @@ export class Tetromino {
     return new Tetromino({
       initialShape: `.OO
       .OO
-      ...`, 
+      ...`,
       orientationsCount: 1,
     });
   }
@@ -33,7 +33,12 @@ export class Tetromino {
   x;
   y;
 
-  constructor({initialShape, prerendered = [], orientationsCount = 4, currentOrientation = 0}) {
+  constructor({
+    initialShape,
+    prerendered = [],
+    orientationsCount = 4,
+    currentOrientation = 0,
+  }) {
     this.orientations = orientationsCount;
     this.prerendered = prerendered;
     this.currentOrientation = currentOrientation;
@@ -64,7 +69,7 @@ export class Tetromino {
     return new Tetromino({
       prerendered: this.prerendered,
       currentOrientation: newOrientation,
-      orientationsCount: this.orientations
+      orientationsCount: this.orientations,
     });
   }
 
@@ -87,7 +92,7 @@ export class Tetromino {
     const row = rows[ny];
     if (!row) return;
     const c = row.charAt(nx);
-    if (c === '.') return;
+    if (c === ".") return;
     return c;
   }
 
@@ -97,7 +102,8 @@ export class Tetromino {
 
   get height() {
     const rows = [...this.prerendered[this.currentOrientation].shape];
-    const isEmptyRow = () => !Array.from(rows[rows.length -1]).find(c => c !== '.');
+    const isEmptyRow = () =>
+      !Array.from(rows[rows.length - 1]).find((c) => c !== ".");
     while (isEmptyRow()) {
       rows.pop();
     }

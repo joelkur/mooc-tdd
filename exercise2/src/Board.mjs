@@ -27,7 +27,11 @@ export class Board {
     return result + "\n";
   }
 
-  _blockInCoord(row, col, blocksToCheck = [...this.blocksOnGround, this.fallingBlock]) {
+  _blockInCoord(
+    row,
+    col,
+    blocksToCheck = [...this.blocksOnGround, this.fallingBlock]
+  ) {
     const blocks = blocksToCheck;
     for (const block of blocks) {
       if (!block) continue;
@@ -65,7 +69,11 @@ export class Board {
   tick() {
     if (!this.fallingBlock) return;
     if (
-      this._blockInCoord(this.fallingBlock.y + 1, this.fallingBlock.x, this.blocksOnGround) ||
+      this._blockInCoord(
+        this.fallingBlock.y + 1,
+        this.fallingBlock.x,
+        this.blocksOnGround
+      ) ||
       this._hitsGround()
     ) {
       this.blocksOnGround.push(this.fallingBlock);
@@ -78,8 +86,7 @@ export class Board {
 
   _hitsGround() {
     let y = this.fallingBlock.y;
-    if (this.fallingBlock.height)
-      y += this.fallingBlock.height;
+    if (this.fallingBlock.height) y += this.fallingBlock.height;
     return y === this.height - 1;
   }
 
