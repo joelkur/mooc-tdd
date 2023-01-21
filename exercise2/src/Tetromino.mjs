@@ -82,18 +82,12 @@ export class Tetromino {
   }
 
   _getNormalizedCoords(y, x) {
-    return [
-      y - this.y,
-      x - this.x,
-    ];
+    return [y - this.y, x - this.x];
   }
 
   _isWithinBounds(y, x) {
     const [ny, nx] = this._getNormalizedCoords(y, x);
-    return (
-      (ny >= 0 || ny <= this.height) &&
-      (nx >= 0 || nx <= this.width)
-    );
+    return (ny >= 0 || ny <= this.height) && (nx >= 0 || nx <= this.width);
   }
 
   getCoord(y, x) {
