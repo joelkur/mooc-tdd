@@ -36,10 +36,14 @@ export class Board {
     blocksToCheck = [...this.shapesOnGround, this.fallingShape]
   ) {
     const blocks = blocksToCheck;
-    for (const block of blocks) {
+    for (let i = 0; i < blocks.length; i++) {
+      const block = blocks[i];
       if (!block) continue;
       if (block instanceof Tetromino) {
-        return block.getCoord(row, col);
+        const b = block.getCoord(row, col, i);
+        if (b) {
+          return b;
+        }
       }
       if (block instanceof Block && block.x === col && block.y === row) {
         return block.color;
@@ -72,16 +76,25 @@ export class Board {
   tick() {
     if (!this.fallingShape) return;
     if (
-      this._blockInCoord(
-        this.fallingShape.y + 1,
-        this.fallingShape.x,
-        this.shapesOnGround
-      ) ||
       this._hitsGround()
     ) {
       this.shapesOnGround.push(this.fallingShape);
       this.fallingShape = null;
       return;
+    }
+
+    const newY = this.fallingShape.y + 1;
+
+    for (let x = this.fallingShape.x; x <= this.fallingShape.x + this.fallingShape.width; x++) {
+      for (let y = newY; y <= newY + this.fallingShape.height; y++) {
+        if (
+          this._blockInCoord(y, x, this.shapesOnGround)
+        ) {
+          this.shapesOnGround.push(this.fallingShape);
+          this.fallingShape = null;
+          return;
+        }
+      }
     }
 
     this.fallingShape.y++;
