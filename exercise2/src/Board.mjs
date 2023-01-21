@@ -109,10 +109,12 @@ export class Board {
   }
 
   moveLeft() {
+    if (this.fallingShape.x <= 0) return;
     this.fallingShape.x--;
   }
 
   moveRight() {
+    if (this.fallingShape.x + this.fallingShape.width >= this.width) return;
     this.fallingShape.x++
   }
 
