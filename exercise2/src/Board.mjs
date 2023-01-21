@@ -73,30 +73,26 @@ export class Board {
     }
   }
 
-  tick() {
-    if (!this.fallingShape) return;
-    if (
-      this._hitsGround()
-    ) {
-      this.shapesOnGround.push(this.fallingShape);
-      this.fallingShape = null;
-      return;
-    }
+  _land() {
+    this.shapesOnGround.push(this.fallingShape);
+    this.fallingShape = null;
+  }
 
+  _willHitOtherShape() {
     const newY = this.fallingShape.y + 1;
-
     for (let x = this.fallingShape.x; x <= this.fallingShape.x + this.fallingShape.width; x++) {
       for (let y = newY; y <= newY + this.fallingShape.height; y++) {
-        if (
-          this._blockInCoord(y, x, this.shapesOnGround)
-        ) {
-          this.shapesOnGround.push(this.fallingShape);
-          this.fallingShape = null;
-          return;
-        }
+        if (this._blockInCoord(y, x, this.shapesOnGround))
+          return true;
       }
     }
+    return false;
+  }
 
+
+  tick() {
+    if (!this.fallingShape) return;
+    if (this._hitsGround() || this._willHitOtherShape()) return this._land();
     this.fallingShape.y++;
   }
 
