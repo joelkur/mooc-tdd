@@ -115,4 +115,8 @@ export class Board {
   moveRight() {
     this.fallingShape.x++
   }
+
+  moveDown() {
+    this.tick();
+  }
 }
