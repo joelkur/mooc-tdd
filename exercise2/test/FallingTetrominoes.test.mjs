@@ -2,29 +2,21 @@ import { expect } from "chai";
 import { Board } from "../src/Board.mjs";
 import { Tetromino } from "../src/Tetromino.mjs";
 
-function fallToBottom(board) {
-  for (let i = 0; i < 10; i++) {
-    board.tick();
+/**
+ * @param {number} times
+ * @param {Function} cb
+ */
+function repeatedAction(times, cb) {
+  for (let i = 0; i < times; i++) {
+    cb();
   }
 }
 
-function moveDownToBottom(board) {
-  for (let i = 0; i < 20; i++) {
-    board.moveDown();
-  }
-}
-
-function moveToLeftBorder(board) {
-  for (let i = 0; i < 10; i++) {
-    board.moveLeft();
-  }
-}
-
-function moveToRightBorder(board) {
-  for (let i = 0; i < 10; i++) {
-    board.moveRight();
-  }
-}
+const fallToBottom = (board) => repeatedAction(10, () => board.tick());
+const moveToLeftBorder = (board) => repeatedAction(10, () => board.moveLeft());
+const moveToRightBorder = (board) =>
+  repeatedAction(10, () => board.moveRight());
+const moveDownToBottom = (board) => repeatedAction(10, () => board.moveDown());
 
 describe("Falling tetrominoes", () => {
   let board;
@@ -87,7 +79,6 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........`
     );
-
   });
 
   it("can be moved right", () => {
@@ -102,7 +93,6 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........`
     );
-
   });
 
   it("can be moved down", () => {
