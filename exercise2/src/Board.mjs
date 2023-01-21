@@ -107,4 +107,8 @@ export class Board {
   hasFalling() {
     return !!this.fallingShape;
   }
+
+  moveLeft() {
+    this.fallingShape.x--;
+  }
 }
