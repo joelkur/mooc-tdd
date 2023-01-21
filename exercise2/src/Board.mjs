@@ -125,4 +125,8 @@ export class Board {
   moveDown() {
     this.tick();
   }
+
+  rotateLeft() {
+    this.fallingShape = this.fallingShape.rotateLeft();
+  }
 }

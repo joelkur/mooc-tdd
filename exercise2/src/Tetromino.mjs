@@ -38,12 +38,14 @@ export class Tetromino {
     prerendered = [],
     orientationsCount = 4,
     currentOrientation = 0,
+    x = 0,
+    y = 0,
   }) {
     this.orientations = orientationsCount;
     this.prerendered = prerendered;
     this.currentOrientation = currentOrientation;
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y;
 
     if (!this.prerendered.length) {
       let tempShape = new RotatingShape(initialShape);
@@ -70,6 +72,8 @@ export class Tetromino {
       prerendered: this.prerendered,
       currentOrientation: newOrientation,
       orientationsCount: this.orientations,
+      x: this.x,
+      y: this.y,
     });
   }
 
