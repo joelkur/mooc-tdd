@@ -107,6 +107,7 @@ export class Board {
 
   moveLeft() {
     if (this.fallingShape.x <= 0) return;
+    if (this._willHitOtherShape({ x: -1 })) return;
     this.fallingShape.x--;
   }
 
