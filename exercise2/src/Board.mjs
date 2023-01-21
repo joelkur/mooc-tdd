@@ -81,7 +81,12 @@ export class Board {
   _willHitOtherShape({ x: xModifier = 0, y: yModifier = 0 } = {}) {
     const newX = this.fallingShape.x + xModifier;
     const newY = this.fallingShape.y + yModifier;
-    for (let x = newX; x <= newX + this.fallingShape.width; x++) {
+
+    if (this.fallingShape instanceof Block) {
+      return this._blockInCoord(newY, newX, this.shapesOnGround);
+    }
+
+    for (let x = newX; x < newX + this.fallingShape.width; x++) {
       for (let y = newY; y <= newY + this.fallingShape.height; y++) {
         if (this._blockInCoord(y, x, this.shapesOnGround)) return true;
       }
@@ -113,6 +118,7 @@ export class Board {
 
   moveRight() {
     if (this.fallingShape.x + this.fallingShape.width >= this.width) return;
+    if (this._willHitOtherShape({ x: 1 })) return;
     this.fallingShape.x++;
   }
 
