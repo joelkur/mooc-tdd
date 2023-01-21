@@ -89,11 +89,11 @@ export class Tetromino {
   }
 
   _isWithinBounds(y, x) {
-    const rows = this.shape;
     const [ny, nx] = this._getNormalizedCoords(y, x);
-    if (ny < 0 || ny >= rows.length) return false;
-    if (!rows.length || nx < 0 || nx >= rows[0].length) return false;
-    return true;
+    return (
+      (ny >= 0 || ny <= this.height) &&
+      (nx >= 0 || nx <= this.width)
+    );
   }
 
   getCoord(y, x) {
