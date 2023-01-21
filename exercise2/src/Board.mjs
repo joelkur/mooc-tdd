@@ -111,4 +111,8 @@ export class Board {
   moveLeft() {
     this.fallingShape.x--;
   }
+
+  moveRight() {
+    this.fallingShape.x++
+  }
 }
